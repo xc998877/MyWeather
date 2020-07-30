@@ -1,6 +1,7 @@
 package com.myweather.android.logic
 
 import androidx.lifecycle.liveData
+import com.myweather.android.logic.dao.PlaceDao
 import com.myweather.android.logic.model.Place
 import com.myweather.android.logic.model.Weather
 import com.myweather.android.logic.network.MyWeatherNetwork
@@ -11,6 +12,9 @@ import okhttp3.Dispatcher
 import kotlin.coroutines.CoroutineContext
 
 object Repository {
+    fun savePlace(place:Place)=PlaceDao.savePlace(place)
+    fun getSavedPlace():Place=PlaceDao.getSavedPlace()
+    fun isPlaceSaved()=PlaceDao.isPlaceSaved()
     fun searchPlaces(query:String)= fire(Dispatchers.IO) {
             val placeResponse=MyWeatherNetwork.searchPlaces(query)
             if(placeResponse.status=="ok"){
