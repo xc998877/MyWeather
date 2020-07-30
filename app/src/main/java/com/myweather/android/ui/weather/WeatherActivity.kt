@@ -45,8 +45,18 @@ class WeatherActivity : AppCompatActivity() {
                 Toast.makeText(this,"无法获取信息",Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
+            swipeRefresh.isRefreshing=false
         })
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        refreshWeather()
+        swipeRefresh.setOnRefreshListener {
+            refreshWeather()
+        }
         viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
+    }
+    fun refreshWeather(){
+        viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
+        swipeRefresh.isRefreshing=true
     }
     private fun showWeatherInfo(weather: Weather){
         placeName.text=viewModel.placeName
